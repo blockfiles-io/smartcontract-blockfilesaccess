@@ -27,39 +27,38 @@ contract BlockfilesAccess is
     event NewAccessMinted(address indexed owner, uint256 tokenId);
     struct File {
         uint256 royaltyFee;
-        bool flatFee;
         uint256 maxHolders;
     }
-    address payable public constant ADDRESS_DEV      = payable(0xA8c51eEC9293b5E4E80d43a5eE7e10e707832F36);
-    address payable public constant ADDRESS_CHARITY  = payable(0xfd5bFF20BDc13E4B659dF40f4a431C0625682D01);
-    address payable public constant ADDRESS_WHISTLE  = payable(0x9D200E11D2631D7BEd8700d579e1880b0259bC73);
-    address payable public constant ADDRESS_TREASURY = payable(0xDFaD9bd60E738e29C8891d76039e1A04A9dF2273);
-    uint256 public constant CHARITY_SPLIT = 10;
+    address payable private constant ADDRESS_DEV      = payable(0xA8c51eEC9293b5E4E80d43a5eE7e10e707832F36);
+    address payable private constant ADDRESS_CHARITY  = payable(0xfd5bFF20BDc13E4B659dF40f4a431C0625682D01);
+    address payable private constant ADDRESS_WHISTLE  = payable(0x9D200E11D2631D7BEd8700d579e1880b0259bC73);
+    address payable private constant ADDRESS_TREASURY = payable(0xDFaD9bd60E738e29C8891d76039e1A04A9dF2273);
+    uint256 private constant CHARITY_SPLIT = 10;
     
     CountersUpgradeable.Counter private _tokenIdTracker;
-    uint256 public devSplit;
-    uint256 public whistleblowerSplit;
-    uint256 public fee;
+    uint256 private devSplit;
+    uint256 private whistleblowerSplit;
+    uint256 private fee;
 
-    address public blockfilesContractAddress;
+    address private blockfilesContractAddress;
 
     function initialize() public initializer {
         __ERC1155_init("https://api.blockfiles.io/v1/access/metadata/");
         devSplit = 50;
         whistleblowerSplit = 10;
         fee = 1;
-        blockfilesContractAddress = 0x37fe0aC287B8c061cf1cb3a886E1BF17b89a658A;
+        blockfilesContractAddress = 0xDf5D8e7380f9f8aD4038C5b07c156C3E103fe5D7;
     }
 
-    function setDevSplit(uint256 newSplit) external onlyOwner {
+    function setDevSplit(uint256 newSplit) external payable onlyOwner {
         devSplit = newSplit;
     }
 
-    function setBlockfilesContractAddress(address adr) external onlyOwner {
+    function setBlockfilesContractAddress(address adr) external payable onlyOwner {
         blockfilesContractAddress = adr;
     }
 
-    function setWhistleblowerSplit(uint256 newSplit) external onlyOwner {
+    function setWhistleblowerSplit(uint256 newSplit) external payable onlyOwner {
         whistleblowerSplit = newSplit;
     }
 
@@ -78,7 +77,7 @@ contract BlockfilesAccess is
         emit NewAccessMinted(owner, tokenId);
     }
 
-    function withdraw() public onlyOwner {
+    function withdraw() public payable onlyOwner {
         uint256 devSplitAmount = address(this).balance*devSplit/100;
         payable(ADDRESS_DEV).call{value: devSplitAmount}("");
         uint256 charitySplitAmount = address(this).balance*CHARITY_SPLIT/100;
@@ -89,7 +88,7 @@ contract BlockfilesAccess is
         payable(ADDRESS_TREASURY).call{value: treasury}("");
     }
 
-    function setURI(string memory newuri) public onlyOwner {
+    function setURI(string memory newuri) public payable onlyOwner {
         _setURI(newuri);
     }
 

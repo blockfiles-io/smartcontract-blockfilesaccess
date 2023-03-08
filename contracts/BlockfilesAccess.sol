@@ -44,10 +44,11 @@ contract BlockfilesAccess is
 
     function initialize() public initializer {
         __ERC1155_init("https://api.blockfiles.io/v1/access/metadata/");
+        __Ownable_init();
         devSplit = 50;
         whistleblowerSplit = 10;
         fee = 1;
-        blockfilesContractAddress = 0xDf5D8e7380f9f8aD4038C5b07c156C3E103fe5D7;
+        blockfilesContractAddress = 0x91CCb03f4c965831399F1915c178cb5853FfAD6e;
     }
 
     function setDevSplit(uint256 newSplit) external payable onlyOwner {

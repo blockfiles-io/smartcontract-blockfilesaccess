@@ -8,8 +8,12 @@ require("@nomiclabs/hardhat-ethers");
 require('@openzeppelin/hardhat-upgrades');
 const { 
   SPH_PRIVATE_KEY, 
+  SPH_API_URL,
   ETH_PRIVATE_KEY,
   ETH_GOERLI_API_URL,
+  MAT_PRIVATE_KEY,
+  MAT_MUMBAI_API_URL,
+  MAT_API_URL,
   OPT_GOERLI_API_URL,
   OPT_PRIVATE_KEY,
   ARB_PRIVATE_KEY, 
@@ -26,7 +30,7 @@ module.exports = {
       accounts: [`0x${ARB_PRIVATE_KEY}`],
     },
     sphinx: {
-      url: "https://sphinx.shardeum.org/",
+      url: SPH_API_URL,
       chainId: 8082,
       accounts:[`0x${SPH_PRIVATE_KEY}`]
     },
@@ -37,6 +41,14 @@ module.exports = {
     optGoerli: {
       url: OPT_GOERLI_API_URL,
       accounts: [`0x${OPT_PRIVATE_KEY}`],
+    },
+    mumbai: {
+      url: MAT_MUMBAI_API_URL,
+      accounts: [`0x${MAT_PRIVATE_KEY}`],
+    },
+    polygon: {
+      url: MAT_API_URL,
+      accounts: [`0x${MAT_PRIVATE_KEY}`],
     }
     
   },

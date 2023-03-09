@@ -5,7 +5,13 @@ var dotenvExpand = require('dotenv-expand')
 var myEnv = dotenv.config()
 dotenvExpand.expand(myEnv)
 const { network } = require("hardhat");
+
 const { 
+    BASE_GOERLI_CONTRACT_ADDRESS,
+    BASE_GOERLI_API_URL,
+    BASE_PUBLIC_KEY,
+    BASE_PRIVATE_KEY,
+    BASE_GOERLI_CONTRACT_FILES_ADDRESS,
     ETH_PRIVATE_KEY,
     ETH_PUBLIC_KEY,
     ETH_GOERLI_CONTRACT_ADDRESS,
@@ -83,6 +89,13 @@ else if (network.name == "mumbai") {
     privateKey = MAT_PRIVATE_KEY;
     blockfilesContractAddress = MAT_MUMBAI_CONTRACT_FILES_ADDRESS;
 }
+else if (network.name == "baseGoerli") {
+    contractAddress = BASE_GOERLI_CONTRACT_ADDRESS;
+    apiUrl = BASE_GOERLI_API_URL;
+    publicKey = BASE_PUBLIC_KEY;
+    privateKey = BASE_PRIVATE_KEY;
+    blockfilesContractAddress = BASE_GOERLI_CONTRACT_FILES_ADDRESS;
+}
 else if (network.name == "polygon") {
     contractAddress = MAT_CONTRACT_ADDRESS;
     apiUrl = MAT_API_URL;
@@ -122,7 +135,7 @@ async function setContractAddress() {
     from: publicKey,
     to: contractAddress,
     nonce: nonce,
-    gas: 9885000,
+    gas: 885000,
     data: nftContract.methods.setBlockfilesContractAddress(blockfilesContractAddress).encodeABI(),
   }
 

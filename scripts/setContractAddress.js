@@ -12,6 +12,9 @@ const {
     ETH_GOERLI_CONTRACT_FILES_ADDRESS,
     ETH_GOERLI_API_URL,
     OPT_GOERLI_API_URL,
+    OPT_API_URL,
+    OPT_CONTRACT_ADDRESS,
+    OPT_CONTRACT_FILES_ADDRESS,
     OPT_PRIVATE_KEY,
     OPT_GOERLI_CONTRACT_ADDRESS,
     OPT_PUBLIC_KEY,
@@ -24,6 +27,10 @@ const {
     SPH_CONTRACT_FILES_ADDRESS,
     ARB_GOERLI_CONTRACT_ADDRESS,
     ARB_GOERLI_CONTRACT_FILES_ADDRESS,
+    ARB_CONTRACT_ADDRESS,
+    ARB_API_URL,
+    ARB_PUBLIC_KEY,
+    ARB_CONTRACT_FILES_ADDRESS,
     ARB_GOERLI_API_URL, 
     MAT_MUMBAI_CONTRACT_ADDRESS,
     MAT_MUMBAI_API_URL,
@@ -83,6 +90,20 @@ else if (network.name == "polygon") {
     privateKey = MAT_PRIVATE_KEY;
     blockfilesContractAddress = MAT_CONTRACT_FILES_ADDRESS;
 }
+else if (network.name == "arbitrum") {
+    contractAddress = ARB_CONTRACT_ADDRESS;
+    apiUrl = ARB_API_URL;
+    publicKey = ARB_PUBLIC_KEY;
+    privateKey = ARB_PRIVATE_KEY;
+    blockfilesContractAddress = ARB_CONTRACT_FILES_ADDRESS;
+}
+else if (network.name == "optimism") {
+    contractAddress = OPT_CONTRACT_ADDRESS;
+    apiUrl = OPT_API_URL;
+    publicKey = OPT_PUBLIC_KEY;
+    privateKey = OPT_PRIVATE_KEY;
+    blockfilesContractAddress = OPT_CONTRACT_FILES_ADDRESS;
+}
 
 const { createAlchemyWeb3 } = require("@alch/alchemy-web3");
 const web3 = createAlchemyWeb3(apiUrl);
@@ -101,7 +122,7 @@ async function setContractAddress() {
     from: publicKey,
     to: contractAddress,
     nonce: nonce,
-    gas: 6885000,
+    gas: 9885000,
     data: nftContract.methods.setBlockfilesContractAddress(blockfilesContractAddress).encodeABI(),
   }
 
